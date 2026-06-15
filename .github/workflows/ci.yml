@@ -6,19 +6,30 @@ on:
       - main
 
 jobs:
-  build:
-
+  build-and-test:
     runs-on: ubuntu-latest
 
     steps:
-
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Build Docker Image
-        run: |
-          docker build -t fastapi-devops .
+      - name: Validate Docker Compose
+        run: docker compose config
 
-      - name: Verify Image
-        run: |
-          docker images
+      - name: Build containers
+        run: docker compose build
+
+      - name: Start containers
+        run: docker compose up -d
+
+      - name: Wait for app
+        run: sleep 10
+
+      - name: Test root endpoint
+        run: curl -f http://localhost:8000
+
+      - name: Test health endpoint
+        run: curl -f http://localhost:8000/health
+
+      - name: Show containers
+        run: docker ps
