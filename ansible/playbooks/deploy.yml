@@ -1,0 +1,20 @@
+---
+- hosts: local
+  become: yes
+
+  tasks:
+    - name: Create app directory
+      file:
+        path: /opt/fastapi-devops
+        state: directory
+        mode: '0755'
+
+    - name: Copy project files
+      copy:
+        src: ../../
+        dest: /opt/fastapi-devops/
+
+    - name: Start FastAPI stack
+      command: docker compose up -d --no-recreate
+      args:
+        chdir: /opt/fastapi-devops
