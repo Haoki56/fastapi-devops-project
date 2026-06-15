@@ -1,35 +1,41 @@
 name: FastAPI CI
 
 on:
-  push:
-    branches:
-      - main
+push:
+branches:
+- main
 
 jobs:
-  build-and-test:
-    runs-on: ubuntu-latest
+build-and-test:
+runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+```
+steps:
+  - name: Checkout
+    uses: actions/checkout@v4
 
-      - name: Validate Docker Compose
-        run: docker compose config
+  - name: Check Makefile exists
+    run: test -f Makefile
 
-      - name: Build containers
-        run: docker compose build
+  - name: Validate Docker Compose
+    run: docker compose config
 
-      - name: Start containers
-        run: docker compose up -d
+  - name: Build containers
+    run: docker compose build
 
-      - name: Wait for app
-        run: sleep 10
+  - name: Start containers
+    run: docker compose up -d
 
-      - name: Test root endpoint
-        run: curl -f http://localhost:8000
+  - name: Wait for app
+    run: sleep 10
 
-      - name: Test health endpoint
-        run: curl -f http://localhost:8000/health
+  - name: Test root endpoint
+    run: curl -f http://localhost:8000
 
-      - name: Show containers
-        run: docker ps
+  - name: Test health endpoint
+    run: curl -f http://localhost:8000/health
+
+  - name: Show containers
+    run: docker ps
+```
+
