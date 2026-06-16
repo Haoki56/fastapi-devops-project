@@ -18,7 +18,7 @@ logs:
 	docker compose logs 
 
 health:
-	curl -d http://localhost:8000/health 
+	curl -f http://localhost:8000/health 
 
 check:
 	docker compose config
