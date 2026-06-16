@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: fastapi-deployment
-  namespace: fastapi-devops 
+  namespace: fastapi-devops
 
 spec:
   replicas: 2
@@ -21,5 +21,20 @@ spec:
         - name: fastapi
           image: docker.io/library/fastapi-devops:latest
           imagePullPolicy: Never
+
           ports:
             - containerPort: 8000
+
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 15
+            periodSeconds: 20
