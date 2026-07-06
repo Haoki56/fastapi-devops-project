@@ -49,3 +49,9 @@ spec:
           envFrom:
             - configMapRef:
                 name: fastapi-config
+          env:
+            - name: API_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: fastapi-secret
+                  key: API_TOKEN
