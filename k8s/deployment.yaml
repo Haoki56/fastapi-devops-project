@@ -46,3 +46,6 @@ spec:
               port: 8000
             initialDelaySeconds: 15
             periodSeconds: 20
+          envFrom:
+            - configMapRef:
+                name: fastapi-config

@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: fastapi-config
+  namespace: fastapi-devops
+
+data:
+  APP_NAME: "FastAPI DevOps Project"
+  ENVIRONMENT: "dev"
